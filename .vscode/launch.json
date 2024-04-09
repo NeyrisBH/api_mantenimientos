@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiMantenimientosApplication<api_mantenimientos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.cccmant.api_mantenimientos.ApiMantenimientosApplication",
+            "projectName": "api_mantenimientos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
