@@ -33,6 +33,14 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
+    public Optional<Usuarios> consultarUsuarioPorId(Long id) {
+        if (id == null) {
+            return Optional.empty();
+        }
+        return repository.findById(id);
+    }
+
+    @Override
     public Usuarios crear(Usuarios usuario) {
         Optional<Usuarios> consultarParaCrear = repository.findById(usuario.getId());
         if (consultarParaCrear.isPresent()) {

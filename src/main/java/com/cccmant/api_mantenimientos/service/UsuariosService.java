@@ -10,6 +10,8 @@ public interface UsuariosService {
 
     public Optional<Usuarios> consultarUsuario(String nombres, String apellidos);
 
+    public Optional<Usuarios> consultarUsuarioPorId(Long id);
+
     public Usuarios crear(Usuarios usuario);
 
     public Usuarios actualizar(Usuarios usuario);

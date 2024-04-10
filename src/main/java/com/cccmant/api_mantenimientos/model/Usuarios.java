@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Usuarios {
     @Id
     @Column(name = "Codigo")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codigo;
 
     @Column(name = "Nombres")
