@@ -15,6 +15,7 @@ public class Equipo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Codigo")
     private long codigo;
 
     @Column(name = "Nombre")
@@ -42,26 +43,26 @@ public class Equipo {
     private String fabricante;
 
     @ManyToOne
-    @JoinColumn(name = "UbicacionCodigo")
-    private long ubicacion;
+    @JoinColumn(name = "UbicacionCodigo", referencedColumnName = "Codigo")
+    private Ubicacion ubicacion;
 
     @Column(name = "PlanMantenimiento")
     private String mantenimientos;
 
     @ManyToOne
-    @JoinColumn(name = "ProveedorIdentificacion")
-    private long proveedor;
+    @JoinColumn(name = "ProveedorIdentificacion", referencedColumnName = "Identificacion")
+    private Proveedor proveedor;
 
     @ManyToOne
-    @JoinColumn(name = "UsuarioIdentificacion")
-    private long usuario;
+    @JoinColumn(name = "UsuarioIdentificacion", referencedColumnName = "Identificacion")
+    private Usuarios usuario;
 
     @Column(name = "Notas")
     private String notas;
 
     public Equipo(String nombre, String imagen, long costo, String modelo, String serial, String fechaCompra,
-            String fechaGarantia, String fabricante, long ubicacion, String mantenimientos, long proveedor,
-            long usuario, String notas) {
+            String fechaGarantia, String fabricante, Ubicacion ubicacion, String mantenimientos, Proveedor proveedor,
+            Usuarios usuario, String notas) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.costo = costo;
@@ -149,11 +150,11 @@ public class Equipo {
         this.fabricante = fabricante;
     }
 
-    public long getUbicacion() {
+    public Ubicacion getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(long ubicacion) {
+    public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
 
@@ -165,19 +166,19 @@ public class Equipo {
         this.mantenimientos = mantenimientos;
     }
 
-    public long getProveedor() {
+    public Proveedor getProveedor() {
         return proveedor;
     }
 
-    public void setProveedor(long proveedor) {
+    public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
 
-    public long getUsuario() {
+    public Usuarios getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(long usuario) {
+    public void setUsuario(Usuarios usuario) {
         this.usuario = usuario;
     }
 

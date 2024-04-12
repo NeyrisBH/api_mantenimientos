@@ -12,9 +12,9 @@ import jakarta.persistence.Table;
 
 public class Usuarios {
     @Id
-    @Column(name = "Codigo")
+    @Column(name = "Identificacion")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
+    private long identificacion;
 
     @Column(name = "Nombres")
     private String nombres;
@@ -37,7 +37,7 @@ public class Usuarios {
 
     // METODOS GET
     public long getId() {
-        return codigo;
+        return identificacion;
     }
 
     public String getNombres() {
@@ -75,7 +75,8 @@ public class Usuarios {
 
     @Override
     public String toString() {
-        return "Usuario [codigo=" + codigo + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo=" + email
+        return "Usuario [codigo=" + identificacion + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo="
+                + email
                 + ", ubicacion=" + ubucacion + "]";
     }
 }

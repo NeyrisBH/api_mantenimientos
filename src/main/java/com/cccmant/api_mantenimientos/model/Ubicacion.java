@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 public class Ubicacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Codigo")
     private long codigo;
 
     @Column(name = "Nombre")
@@ -23,7 +24,7 @@ public class Ubicacion {
     private String sede;
 
     @ManyToOne
-    @JoinColumn(name = "Codigo", referencedColumnName = "UbicacionCodigo")
+    @JoinColumn(name = "UbicacionCodigo", referencedColumnName = "Codigo")
     private Ubicacion ubicacion;
 
     public Ubicacion(String nombre, String sede) {
@@ -31,30 +32,41 @@ public class Ubicacion {
         this.sede = sede;
     }
 
-    // METODOS GET
-    public long getId() {
+    public long getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getSede() {
-        return sede;
-    }
-
-    // METODOS SET
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getSede() {
+        return sede;
     }
 
     public void setSede(String sede) {
         this.sede = sede;
     }
 
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
     @Override
-    public java.lang.String toString() {
-        return "Ubicacion [codigo=" + codigo + ", nombre=" + nombre + ", sede=" + sede + "]";
+    public String toString() {
+        return "Ubicacion [codigo=" + codigo + ", nombre=" + nombre + ", sede=" + sede + ", ubicacion=" + ubicacion
+                + "]";
     }
 }

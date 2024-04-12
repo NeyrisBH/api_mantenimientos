@@ -30,7 +30,7 @@ public class UbicacionServiceImpl implements UbicacionService {
 
     @Override
     public Ubicacion crear(Ubicacion ubicacion) {
-        Optional<Ubicacion> ubicacionCrear = repository.findById(ubicacion.getId());
+        Optional<Ubicacion> ubicacionCrear = repository.findById(ubicacion.getCodigo());
         if (ubicacionCrear.isPresent()) {
             return null;
         }
@@ -39,7 +39,7 @@ public class UbicacionServiceImpl implements UbicacionService {
 
     @Override
     public Ubicacion actualizar(Ubicacion ubicacion) {
-        Optional<Ubicacion> ubicacionActualizar = repository.findById(ubicacion.getId());
+        Optional<Ubicacion> ubicacionActualizar = repository.findById(ubicacion.getCodigo());
         if (ubicacionActualizar.isPresent()) {
             return repository.save(ubicacion);
         }

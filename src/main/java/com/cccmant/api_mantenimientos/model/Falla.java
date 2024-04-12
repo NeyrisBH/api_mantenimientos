@@ -15,6 +15,7 @@ public class Falla {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Codigo")
     private long codigo;
 
     @Column(name = "Motivo")
@@ -24,10 +25,10 @@ public class Falla {
     private String fecha;
 
     @ManyToOne
-    @JoinColumn(name = "CodigoEquipo")
-    private long equipo;
+    @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
+    private Equipo equipo;
 
-    public Falla(String motivo, String fecha, long equipo) {
+    public Falla(String motivo, String fecha, Equipo equipo) {
         this.motivo = motivo;
         this.fecha = fecha;
         this.equipo = equipo;
@@ -57,11 +58,11 @@ public class Falla {
         this.fecha = fecha;
     }
 
-    public long getEquipo() {
+    public Equipo getEquipo() {
         return equipo;
     }
 
-    public void setEquipo(long equipo) {
+    public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
     }
 

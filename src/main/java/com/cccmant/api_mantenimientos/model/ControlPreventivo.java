@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 public class ControlPreventivo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Codigo")
     private long codigo;
 
     @Column(name = "Fecha")
@@ -47,15 +48,15 @@ public class ControlPreventivo {
     private String p9;
 
     @ManyToOne
-    @JoinColumn(name = "CodigoEquipo")
-    private long equipo;
+    @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
+    private Equipo equipo;
 
     @ManyToOne
-    @JoinColumn(name = "IdentificacionTecnico")
-    private long tecnico;
+    @JoinColumn(name = "IdentificacionTecnico", referencedColumnName = "Identificacion")
+    private Tecnico tecnico;
 
     public ControlPreventivo(String fecha, String p1, String p2, String p3, String p4, String p5, String p6, String p7,
-            String p8, String p9, long equipo, long tecnico) {
+            String p8, String p9, Equipo equipo, Tecnico tecnico) {
         this.fecha = fecha;
         this.p1 = p1;
         this.p2 = p2;
@@ -70,109 +71,107 @@ public class ControlPreventivo {
         this.tecnico = tecnico;
     }
 
-    // METODOS GET
     public long getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
     }
 
     public String getFecha() {
         return fecha;
     }
 
-    public String getP1() {
-        return p1;
-    }
-
-    public String getP2() {
-        return p2;
-    }
-
-    public String getP3() {
-        return p3;
-    }
-
-    public String getP4() {
-        return p4;
-    }
-
-    public String getP5() {
-        return p5;
-    }
-
-    public String getP6() {
-        return p6;
-    }
-
-    public String getP7() {
-        return p7;
-    }
-
-    public String getP8() {
-        return p8;
-    }
-
-    public String getP9() {
-        return p9;
-    }
-
-    public long getEquipo() {
-        return equipo;
-    }
-
-    public long getTecnico() {
-        return tecnico;
-    }
-
-    // METODOS SET
-    public void setCodigo(long codigo) {
-        this.codigo = codigo;
-    }
-
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getP1() {
+        return p1;
     }
 
     public void setP1(String p1) {
         this.p1 = p1;
     }
 
+    public String getP2() {
+        return p2;
+    }
+
     public void setP2(String p2) {
         this.p2 = p2;
+    }
+
+    public String getP3() {
+        return p3;
     }
 
     public void setP3(String p3) {
         this.p3 = p3;
     }
 
+    public String getP4() {
+        return p4;
+    }
+
     public void setP4(String p4) {
         this.p4 = p4;
+    }
+
+    public String getP5() {
+        return p5;
     }
 
     public void setP5(String p5) {
         this.p5 = p5;
     }
 
+    public String getP6() {
+        return p6;
+    }
+
     public void setP6(String p6) {
         this.p6 = p6;
+    }
+
+    public String getP7() {
+        return p7;
     }
 
     public void setP7(String p7) {
         this.p7 = p7;
     }
 
+    public String getP8() {
+        return p8;
+    }
+
     public void setP8(String p8) {
         this.p8 = p8;
+    }
+
+    public String getP9() {
+        return p9;
     }
 
     public void setP9(String p9) {
         this.p9 = p9;
     }
 
-    public void setEquipo(long equipo) {
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
     }
 
-    public void setTecnico(long tecnico) {
+    public Tecnico getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Tecnico tecnico) {
         this.tecnico = tecnico;
     }
 

@@ -15,6 +15,7 @@ public class ControlCorrectivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Codigo")
     private long codigo;
 
     @Column(name = "Fecha")
@@ -51,15 +52,15 @@ public class ControlCorrectivo {
     private String n5;
 
     @ManyToOne
-    @JoinColumn(name = "CodigoEquipo")
-    private long equipo;
+    @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
+    private Equipo equipo;
 
     @ManyToOne
-    @JoinColumn(name = "IdentificacionTecnico")
-    private long tecnico;
+    @JoinColumn(name = "IdentificacionTecnico", referencedColumnName = "Identificacion")
+    private Tecnico tecnico;
 
     public ControlCorrectivo(String fecha, String p1, String p2, String p3, String p4, String p5, String n1, String n2,
-            String n3, String n4, String n5, long equipo, long tecnico) {
+            String n3, String n4, String n5, Equipo equipo, Tecnico tecnico) {
         this.fecha = fecha;
         this.p1 = p1;
         this.p2 = p2;
@@ -124,11 +125,11 @@ public class ControlCorrectivo {
         return n5;
     }
 
-    public long getEquipo() {
+    public Equipo getEquipo() {
         return equipo;
     }
 
-    public long getTecnico() {
+    public Tecnico getTecnico() {
         return tecnico;
     }
 
@@ -177,11 +178,11 @@ public class ControlCorrectivo {
         this.n5 = n5;
     }
 
-    public void setEquipo(long equipo) {
+    public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
     }
 
-    public void setTecnico(long tecnico) {
+    public void setTecnico(Tecnico tecnico) {
         this.tecnico = tecnico;
     }
 
