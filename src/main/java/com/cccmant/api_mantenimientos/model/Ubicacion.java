@@ -1,13 +1,17 @@
 package com.cccmant.api_mantenimientos.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "cmms_ubicaciones")
@@ -23,9 +27,16 @@ public class Ubicacion {
     @Column(name = "Sede")
     private String sede;
 
-    @ManyToOne
-    @JoinColumn(name = "UbicacionCodigo", referencedColumnName = "Codigo")
-    private Ubicacion ubicacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createdAt", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updatedAt", nullable = false)
+    private Date updatedAt;
+
+    public Ubicacion() {
+    }
 
     public Ubicacion(String nombre, String sede) {
         this.nombre = nombre;
@@ -56,17 +67,20 @@ public class Ubicacion {
         this.sede = sede;
     }
 
-    public Ubicacion getUbicacion() {
-        return ubicacion;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        updatedAt = new Date();
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
-        this.ubicacion = ubicacion;
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 
     @Override
     public String toString() {
-        return "Ubicacion [codigo=" + codigo + ", nombre=" + nombre + ", sede=" + sede + ", ubicacion=" + ubicacion
+        return "Ubicacion [codigo=" + codigo + ", nombre=" + nombre + ", sede=" + sede
                 + "]";
     }
 }

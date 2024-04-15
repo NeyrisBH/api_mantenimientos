@@ -2,8 +2,6 @@ package com.cccmant.api_mantenimientos.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -12,7 +10,6 @@ import jakarta.persistence.Table;
 public class Tecnico {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Identificacion")
     private long identificacion;
 
@@ -26,7 +23,7 @@ public class Tecnico {
     private long telefono;
 
     @Column(name = "CorreoElectronico")
-    private String correo;
+    private String email;
 
     @Column(name = "HorasLaborales")
     private long horas;
@@ -40,7 +37,7 @@ public class Tecnico {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.correo = correo;
+        this.email = correo;
         this.horas = horas;
         this.contraseña = contraseña;
     }
@@ -77,12 +74,12 @@ public class Tecnico {
         this.telefono = telefono;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String correo) {
+        this.email = correo;
     }
 
     public long getHoras() {
@@ -104,7 +101,7 @@ public class Tecnico {
     @Override
     public String toString() {
         return "Tecnico [identificacion=" + identificacion + ", nombres=" + nombres + ", apellidos=" + apellidos
-                + ", telefono=" + telefono + ", correo=" + correo + ", horas=" + horas + ", contraseña=" + contraseña
+                + ", telefono=" + telefono + ", correo=" + email + ", horas=" + horas + ", contraseña=" + contraseña
                 + "]";
     }
 }

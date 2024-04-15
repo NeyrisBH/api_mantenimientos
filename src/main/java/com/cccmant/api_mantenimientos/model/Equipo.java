@@ -54,7 +54,7 @@ public class Equipo {
     private Proveedor proveedor;
 
     @ManyToOne
-    @JoinColumn(name = "UsuarioIdentificacion", referencedColumnName = "Identificacion")
+    @JoinColumn(name = "UsuarioIdentificacion", referencedColumnName = "Codigo")
     private Usuarios usuario;
 
     @Column(name = "Notas")
