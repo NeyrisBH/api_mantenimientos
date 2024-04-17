@@ -21,14 +21,9 @@ public class TecnicoServiceImpl implements TecnicosService {
     }
 
     @Override
-    public Optional<Tecnico> consultarTecnico(Long id, String email) {
-        if (id == null && email == null) {
+    public Optional<Tecnico> consultarTecnico(String email) {
+        if (email == null) {
             return Optional.empty();
-        }
-
-        if (id == null) {
-            List<Tecnico> lista = repository.findByCorreo(email);
-            return Optional.of(lista.get(0));
         }
         return repository.findById(id);
     }

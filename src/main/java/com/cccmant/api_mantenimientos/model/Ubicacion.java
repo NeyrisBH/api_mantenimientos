@@ -36,11 +36,14 @@ public class Ubicacion {
     private Date updatedAt;
 
     public Ubicacion() {
+        super();
     }
 
-    public Ubicacion(String nombre, String sede) {
+    public Ubicacion(String nombre, String sede, Date createdAt, Date updatedAt) {
         this.nombre = nombre;
         this.sede = sede;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public long getCodigo() {
@@ -65,6 +68,22 @@ public class Ubicacion {
 
     public void setSede(String sede) {
         this.sede = sede;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist

@@ -59,6 +59,10 @@ public class ControlCorrectivo {
     @JoinColumn(name = "IdentificacionTecnico", referencedColumnName = "Identificacion")
     private Tecnico tecnico;
 
+    public ControlCorrectivo() {
+        super();
+    }
+
     public ControlCorrectivo(String fecha, String p1, String p2, String p3, String p4, String p5, String n1, String n2,
             String n3, String n4, String n5, Equipo equipo, Tecnico tecnico) {
         this.fecha = fecha;

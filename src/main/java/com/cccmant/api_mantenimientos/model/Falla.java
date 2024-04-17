@@ -28,6 +28,10 @@ public class Falla {
     @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
     private Equipo equipo;
 
+    public Falla() {
+        super();
+    }
+
     public Falla(String motivo, String fecha, Equipo equipo) {
         this.motivo = motivo;
         this.fecha = fecha;

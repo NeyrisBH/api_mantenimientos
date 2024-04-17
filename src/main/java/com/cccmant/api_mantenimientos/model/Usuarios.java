@@ -28,6 +28,10 @@ public class Usuarios {
     @Column(name = "UbicacionCodigo")
     private Long ubucacion;
 
+    public Usuarios() {
+        super();
+    }
+
     public Usuarios(String nombres, String apellidos, String email, Long ubicacion) {
         this.nombres = nombres;
         this.apellidos = apellidos;

@@ -28,6 +28,10 @@ public class Proveedor {
     @Column(name = "Notas")
     private String notas;
 
+    public Proveedor() {
+        super();
+    }
+
     public Proveedor(long identificacion, String razonSocial, long telefono, String correo, String notas) {
         this.identificacion = identificacion;
         this.razonSocial = razonSocial;

@@ -38,6 +38,10 @@ public class Repuesto {
     @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
     private Equipo equipo;
 
+    public Repuesto() {
+        super();
+    }
+
     public Repuesto(String nombre, String imagen, long cantidad, long costo, Proveedor proveedor, Equipo equipo) {
         this.nombre = nombre;
         this.imagen = imagen;

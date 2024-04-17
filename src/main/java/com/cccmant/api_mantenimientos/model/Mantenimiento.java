@@ -39,6 +39,10 @@ public class Mantenimiento {
     @Column(name = "Descripcion")
     private String descripcion;
 
+    public Mantenimiento() {
+        super();
+    }
+
     public Mantenimiento(String f_inicio, String f_final, Falla falla, Tecnico tecnico, ControlPreventivo preventivo,
             String descripcion) {
         this.f_inicio = f_inicio;

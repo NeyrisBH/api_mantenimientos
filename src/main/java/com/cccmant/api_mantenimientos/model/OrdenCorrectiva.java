@@ -60,6 +60,10 @@ public class OrdenCorrectiva {
     @JoinColumn(name = "CodigoEquipo", referencedColumnName = "Codigo")
     private Equipo equipo;
 
+    public OrdenCorrectiva() {
+        super();
+    }
+
     public OrdenCorrectiva(String f_inicio, String f_final, String descripcion, long costo, String prioridad,
             long cantidad, Repuesto r1, Repuesto r2, Repuesto r3, Repuesto r4, Tecnico tecnico, Equipo equipo) {
         this.f_inicio = f_inicio;

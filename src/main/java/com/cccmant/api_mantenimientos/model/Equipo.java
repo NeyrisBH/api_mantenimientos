@@ -60,6 +60,10 @@ public class Equipo {
     @Column(name = "Notas")
     private String notas;
 
+    public Equipo() {
+        super();
+    }
+
     public Equipo(String nombre, String imagen, long costo, String modelo, String serial, String fechaCompra,
             String fechaGarantia, String fabricante, Ubicacion ubicacion, String mantenimientos, Proveedor proveedor,
             Usuarios usuario, String notas) {

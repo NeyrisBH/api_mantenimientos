@@ -13,6 +13,9 @@ public class Tecnico {
     @Column(name = "Identificacion")
     private long identificacion;
 
+    @Column(name = "rol")
+    private String rol;
+
     @Column(name = "Nombres")
     private String nombres;
 
@@ -31,13 +34,18 @@ public class Tecnico {
     @Column(name = "Contraseña")
     private String contraseña;
 
-    public Tecnico(long identificacion, String nombres, String apellidos, long telefono, String correo, long horas,
-            String contraseña) {
+    public Tecnico() {
+        super();
+    }
+
+    public Tecnico(long identificacion, String rol, String nombres, String apellidos, long telefono, String email,
+            long horas, String contraseña) {
         this.identificacion = identificacion;
+        this.rol = rol;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.email = correo;
+        this.email = email;
         this.horas = horas;
         this.contraseña = contraseña;
     }
@@ -48,6 +56,14 @@ public class Tecnico {
 
     public void setIdentificacion(long identificacion) {
         this.identificacion = identificacion;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public String getNombres() {
@@ -78,8 +94,8 @@ public class Tecnico {
         return email;
     }
 
-    public void setEmail(String correo) {
-        this.email = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getHoras() {
@@ -100,8 +116,8 @@ public class Tecnico {
 
     @Override
     public String toString() {
-        return "Tecnico [identificacion=" + identificacion + ", nombres=" + nombres + ", apellidos=" + apellidos
-                + ", telefono=" + telefono + ", correo=" + email + ", horas=" + horas + ", contraseña=" + contraseña
-                + "]";
+        return "Tecnico [identificacion=" + identificacion + ", rol=" + rol + ", nombres=" + nombres + ", apellidos="
+                + apellidos + ", telefono=" + telefono + ", email=" + email + ", horas=" + horas + ", contraseña="
+                + contraseña + "]";
     }
 }

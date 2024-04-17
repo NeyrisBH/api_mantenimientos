@@ -8,7 +8,7 @@ import com.cccmant.api_mantenimientos.model.Tecnico;
 public interface TecnicosService {
     public List<Tecnico> consultarTecnicos();
 
-    public Optional<Tecnico> consultarTecnico(Long id, String email);
+    public Optional<Tecnico> consultarTecnico(String email);
 
     public Tecnico crearTecnico(Tecnico tecnico);
 
