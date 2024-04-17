@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2024 a las 00:43:36
+-- Tiempo de generación: 18-04-2024 a las 00:41:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,8 +42,8 @@ CREATE TABLE `cmms_controlcorrectivo` (
   `n5` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo_equipo` int(11) DEFAULT NULL,
   `identificacion_tecnico` bigint(20) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -66,8 +66,8 @@ CREATE TABLE `cmms_controlpreventivo` (
   `p9` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `codigo_equipo` int(11) DEFAULT NULL,
   `identificacion_tecnico` bigint(20) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -91,8 +91,8 @@ CREATE TABLE `cmms_equipos` (
   ` 	proveedor_identificacion` int(11) DEFAULT NULL,
   `usuario_identificacion` bigint(20) DEFAULT NULL,
   `notas` text DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `proveedor_identificacion` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -107,8 +107,8 @@ CREATE TABLE `cmms_fallas` (
   `motivo` text NOT NULL,
   `fecha` text NOT NULL,
   `codigo_equipo` int(11) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -125,8 +125,8 @@ CREATE TABLE `cmms_mantenimientos` (
   `tecnico_identificacion` bigint(20) DEFAULT NULL,
   `controlipcodigo` int(11) DEFAULT NULL,
   `descripcion` text NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -195,6 +195,7 @@ CREATE TABLE `cmms_repuestos` (
 
 CREATE TABLE `cmms_tecnicos` (
   `identificacion` bigint(20) NOT NULL,
+  `rol` varchar(255) NOT NULL,
   `nombres` varchar(255) NOT NULL,
   `apellidos` varchar(255) NOT NULL,
   `telefono` bigint(20) NOT NULL,
@@ -215,16 +216,16 @@ CREATE TABLE `cmms_ubicaciones` (
   `codigo` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `sede` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `cmms_ubicaciones`
 --
 
-INSERT INTO `cmms_ubicaciones` (`codigo`, `nombre`, `sede`, `createdAt`, `updatedAt`) VALUES
-(0, 'Ubicación de prueba', 'Sede de prueba', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `cmms_ubicaciones` (`codigo`, `nombre`, `sede`, `created_at`, `updated_at`) VALUES
+(0, 'Ubicación de prueba', 'Sede de prueba', '2024-04-17 14:53:08', '2024-04-17 14:53:08');
 
 -- --------------------------------------------------------
 
@@ -383,20 +384,20 @@ ALTER TABLE `cmms_controlpreventivo`
 --
 ALTER TABLE `cmms_equipos`
   ADD CONSTRAINT `Equipos_ibfk_1` FOREIGN KEY (` 	proveedor_identificacion`) REFERENCES `cmms_proveedores` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `Equipos_ibfk_2` FOREIGN KEY (`ubicacion_codigo`) REFERENCES `cmms_ubicaciones` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Equipos_ibfk_2` FOREIGN KEY (`ubicacion_codigo`) REFERENCES `cmms_ubicaciones` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Equipos_ibfk_3` FOREIGN KEY (`usuario_identificacion`) REFERENCES `cmms_usuarios` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cmms_fallas`
 --
 ALTER TABLE `cmms_fallas`
-  ADD CONSTRAINT `Fallas_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `Fallas_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cmms_mantenimientos`
 --
 ALTER TABLE `cmms_mantenimientos`
-  ADD CONSTRAINT `Mantenimientos_ibfk_1` FOREIGN KEY (`controlipcodigo`) REFERENCES `cmms_controlpreventivo` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Mantenimientos_ibfk_1` FOREIGN KEY (`controlipcodigo`) REFERENCES `cmms_controlpreventivo` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Mantenimientos_ibfk_2` FOREIGN KEY (`falla_codigo`) REFERENCES `cmms_fallas` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Mantenimientos_ibfk_3` FOREIGN KEY (`tecnico_identificacion`) REFERENCES `cmms_tecnicos` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE;
 
