@@ -25,7 +25,12 @@ public class TecnicoServiceImpl implements TecnicosService {
         if (email == null) {
             return Optional.empty();
         }
-        return repository.findById(id);
+        List<Tecnico> listaTecnicos = repository.findByCorreo(email);
+        if (!listaTecnicos.isEmpty()) {
+            return Optional.of(listaTecnicos.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
