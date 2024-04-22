@@ -25,5 +25,7 @@ com\cccmant\api_mantenimientos\model\Proveedor.class
 com\cccmant\api_mantenimientos\ApiMantenimientosApplication.class
 com\cccmant\api_mantenimientos\model\Tecnico.class
 com\cccmant\api_mantenimientos\controller\UbicacionController.class
+com\cccmant\api_mantenimientos\ApiMantenimientosApplication$WebSecurityConfig.class
+com\cccmant\api_mantenimientos\JwtFilter.class
 com\cccmant\api_mantenimientos\repository\TecnicosRepository.class
 com\cccmant\api_mantenimientos\model\Usuarios.class
