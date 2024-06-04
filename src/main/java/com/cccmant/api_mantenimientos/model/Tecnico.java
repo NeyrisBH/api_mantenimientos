@@ -1,9 +1,15 @@
 package com.cccmant.api_mantenimientos.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "cmms_tecnicos")
@@ -13,7 +19,7 @@ public class Tecnico {
     @Column(name = "Identificacion")
     private long identificacion;
 
-    @Column(name = "rol")
+    @Column(name = "Rol")
     private String rol;
 
     @Column(name = "Nombres")
@@ -34,12 +40,19 @@ public class Tecnico {
     @Column(name = "Contraseña")
     private String contraseña;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createdAt", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updatedAt", nullable = false)
+    private Date updatedAt;
+
     public Tecnico() {
         super();
     }
 
-    public Tecnico(long identificacion, String rol, String nombres, String apellidos, long telefono, String email,
-            long horas, String contraseña) {
+    public Tecnico(long identificacion, String rol, String nombres, String apellidos, long telefono, String email, long horas, String contraseña, Date createdAt, Date updatedAt) {
         this.identificacion = identificacion;
         this.rol = rol;
         this.nombres = nombres;
@@ -48,6 +61,8 @@ public class Tecnico {
         this.email = email;
         this.horas = horas;
         this.contraseña = contraseña;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public long getIdentificacion() {
@@ -112,6 +127,33 @@ public class Tecnico {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        updatedAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 
     @Override

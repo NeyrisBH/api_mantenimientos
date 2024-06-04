@@ -29,11 +29,6 @@ public class UsuariosController {
         return ResponseEntity.status(HttpStatus.OK).body(servicio.consultar());
     }
 
-    // @GetMapping("/{id}")
-    // public ResponseEntity<?> consultarPorId(@PathVariable Long id){
-    // Optional<Usuarios> usuario = servicio.consultarUsuario(null, null)
-    // }
-
     @PostMapping
     public ResponseEntity<?> crearUsuario(@RequestBody Usuarios usuario) {
         Optional<Usuarios> usuarioCrear = servicio.consultarUsuarioPorId(usuario.getId());

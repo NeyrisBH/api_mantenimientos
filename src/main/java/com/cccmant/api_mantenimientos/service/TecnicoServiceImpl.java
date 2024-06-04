@@ -40,7 +40,7 @@ public class TecnicoServiceImpl implements TecnicosService {
             return null;
         }
         List<Tecnico> tecnicos = repository.findByCorreo(tecnico.getEmail());
-        if (tecnicos.size() > 0) {
+        if (!tecnicos.isEmpty()) {
             return tecnicos.get(0);
         }
         return repository.save(tecnico);
