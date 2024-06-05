@@ -47,7 +47,7 @@ public class UsuariosServiceImpl implements UsuariosService {
             return null;
         }
         List<Usuarios> usuarios = repository.findByNombres(usuario.getNombres());
-        if (usuarios.size() > 0) {
+        if (!usuarios.isEmpty()) {
             return usuarios.get(0);
         }
         return repository.save(usuario);
