@@ -16,8 +16,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 @SuppressWarnings("deprecation")
+
 @Component
 public class JwtUtil {
+    
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     public static String crearToken(String email, String rol) {
