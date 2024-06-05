@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,8 +15,9 @@ import com.cccmant.api_mantenimientos.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +27,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private final String HEADER = "Authorization";
     private final String PREFIX = "Bearer";
 
-    @SuppressWarnings({ "deprecation", "unchecked" })
+    private  static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+    @SuppressWarnings({"unchecked" })
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -34,8 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.clearContext();
             } else if (headers.startsWith(PREFIX)) {
                 String token = headers.replace(PREFIX, "");
-                Claims contenido = Jwts.parser().setSigningKey(JwtUtil.KEYWORD.getBytes()).build()
-                        .parseClaimsJws(token).getBody();
+                Claims contenido = new JwtUtil().obtenerClaims(token);
                 String email = (String) contenido.get("email");
                 System.out.println(email);
                 List<String> rolesString = (List<String>) contenido.get("authorities");

@@ -34,6 +34,11 @@ public class TecnicoServiceImpl implements TecnicosService {
     }
 
     @Override
+    public Optional<Tecnico> consultarTecnicoPorIdentificacion(long identificacion) {
+        return repository.findById(identificacion);
+    }
+
+    @Override
     public Tecnico crearTecnico(Tecnico tecnico) {
         Optional<Tecnico> consultarParaCrear = repository.findById(tecnico.getIdentificacion());
         if (consultarParaCrear.isPresent()) {

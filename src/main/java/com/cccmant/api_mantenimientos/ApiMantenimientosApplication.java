@@ -2,6 +2,8 @@ package com.cccmant.api_mantenimientos;
 
 import java.util.Arrays;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @SpringBootApplication
 public class ApiMantenimientosApplication {
@@ -36,10 +41,7 @@ public class ApiMantenimientosApplication {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/api/token").permitAll()
-					.requestMatchers(HttpMethod.GET, "api/v1/tecnicos").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/v1/tecnicos").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/usuarios").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/ubicaciones").hasAuthority("Admin")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/tecnicos").hasAuthority("ADMIN")
                     .anyRequest().authenticated()
                 );
             return http.build();
@@ -56,6 +58,12 @@ public class ApiMantenimientosApplication {
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**", configuration);
             return source;
+        }
+
+        @Bean
+        public SecretKey secretKey() {
+            // Generar una clave segura para el algoritmo HS512
+            return Keys.secretKeyFor(SignatureAlgorithm.HS512);
         }
 
         @Bean

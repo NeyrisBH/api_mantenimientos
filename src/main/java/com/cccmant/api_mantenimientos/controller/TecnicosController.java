@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,18 +22,23 @@ public class TecnicosController {
     @Autowired
     private TecnicosService service;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public ResponseEntity<?> consultarTecnicos() {
         return ResponseEntity.status(HttpStatus.OK).body(service.consultarTecnicos());
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> crearTecnico(@RequestBody Tecnico tecnico) {
-        Optional<Tecnico> tecnicoCrear = service.consultarTecnico(tecnico.getEmail());
-        if (tecnicoCrear.isPresent()) {
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    Optional<Tecnico> tecnicoExistente = service.consultarTecnicoPorIdentificacion(tecnico.getIdentificacion());
+        if (tecnicoExistente.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya existe un técnico con la misma identificación.");
+        } else {
+            String encrypPassword = passwordEncoder.encode(tecnico.getContraseña());
+            tecnico.setContraseña(encrypPassword);
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.crearTecnico(tecnico));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.crearTecnico(tecnico));
     }
 }

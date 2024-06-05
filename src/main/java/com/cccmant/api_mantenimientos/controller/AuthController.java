@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,6 @@ import com.cccmant.api_mantenimientos.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,20 +37,23 @@ public class AuthController {
     @Autowired
     private TecnicosService servicioTecnico;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping()
     public ResponseEntity<?> consultarToken(@RequestBody Tecnico tecnico) {
-        boolean respuesta = servicio.loginTecnico(tecnico.getEmail(),
-                tecnico.getContraseña());
-        if (!respuesta) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
         Optional<Tecnico> tecnicoConsulta = servicioTecnico.consultarTecnico(tecnico.getEmail());
-        String token = JwtUtil.crearToken(tecnico.getEmail(), tecnicoConsulta.get().getRol());
-        System.out.println(token);
-        return ResponseEntity.ok(new JSONObject().put("token", token).toString());
+        if (tecnicoConsulta.isPresent()) {
+            Tecnico tecnicoToken = tecnicoConsulta.get();
+            if (passwordEncoder.matches(tecnico.getContraseña(), tecnicoToken.getContraseña())) {
+                String token = JwtUtil.crearToken(tecnicoToken.getEmail(), tecnicoToken.getRol());
+                return  ResponseEntity.ok(new JSONObject().put("token", token).toString());
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @SuppressWarnings({ "deprecation", "unchecked" })
+    @SuppressWarnings({"unchecked" })
     @GetMapping("refresh")
     public ResponseEntity<?> actualizarToken(HttpServletRequest request) {
         String token2 = null;
@@ -60,8 +63,7 @@ public class AuthController {
                 SecurityContextHolder.clearContext();
             } else if (headers.startsWith(PREFIX)) {
                 String token = headers.replace(PREFIX, "");
-                Claims contenido = Jwts.parser().setSigningKey(JwtUtil.KEYWORD.getBytes()).build()
-                        .parseClaimsJws(token).getBody();
+                Claims contenido = new JwtUtil().obtenerClaims(token);
                 String email = (String) contenido.get("email");
                 System.out.println(email);
                 List<String> rolesString = (List<String>) contenido.get("authorities");

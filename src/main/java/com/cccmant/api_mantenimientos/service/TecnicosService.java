@@ -10,6 +10,8 @@ public interface TecnicosService {
 
     public Optional<Tecnico> consultarTecnico(String email);
 
+    public Optional<Tecnico> consultarTecnicoPorIdentificacion(long identificacion);
+
     public Tecnico crearTecnico(Tecnico tecnico);
 
     public Tecnico actualizarTecnico(Tecnico tecnico);
