@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2024 a las 00:41:46
+-- Tiempo de generación: 08-06-2024 a las 18:07:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -202,9 +202,16 @@ CREATE TABLE `cmms_tecnicos` (
   `correo_electronico` varchar(255) NOT NULL,
   `horas_laborales` bigint(20) DEFAULT NULL,
   `contraseña` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `cmms_tecnicos`
+--
+
+INSERT INTO `cmms_tecnicos` (`identificacion`, `rol`, `nombres`, `apellidos`, `telefono`, `correo_electronico`, `horas_laborales`, `contraseña`, `created_at`, `updated_at`) VALUES
+(1115866620, 'ADMIN', 'Neyris', 'Bohorquez', 3013466434, 'ejemplo@gmail.com', 40, '$2a$10$CvDx4urgJTc9WbEhd6SvAOHr3pj118LYFQ2JtZh2V1nr69L1EDNES', '2024-06-05 14:48:08', '2024-06-05 14:48:08');
 
 -- --------------------------------------------------------
 
@@ -369,7 +376,7 @@ ALTER TABLE `cmms_usuarios`
 -- Filtros para la tabla `cmms_controlcorrectivo`
 --
 ALTER TABLE `cmms_controlcorrectivo`
-  ADD CONSTRAINT `Correctivo_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Correctivo_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Correctivo_ibfk_2` FOREIGN KEY (`identificacion_tecnico`) REFERENCES `cmms_tecnicos` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
@@ -377,7 +384,7 @@ ALTER TABLE `cmms_controlcorrectivo`
 --
 ALTER TABLE `cmms_controlpreventivo`
   ADD CONSTRAINT `Preventivo_ibfk_1` FOREIGN KEY (`identificacion_tecnico`) REFERENCES `cmms_tecnicos` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `Preventivo_ibfk_2` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `Preventivo_ibfk_2` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cmms_equipos`
@@ -397,7 +404,7 @@ ALTER TABLE `cmms_fallas`
 -- Filtros para la tabla `cmms_mantenimientos`
 --
 ALTER TABLE `cmms_mantenimientos`
-  ADD CONSTRAINT `Mantenimientos_ibfk_1` FOREIGN KEY (`controlipcodigo`) REFERENCES `cmms_controlpreventivo` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Mantenimientos_ibfk_1` FOREIGN KEY (`controlipcodigo`) REFERENCES `cmms_controlpreventivo` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Mantenimientos_ibfk_2` FOREIGN KEY (`falla_codigo`) REFERENCES `cmms_fallas` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Mantenimientos_ibfk_3` FOREIGN KEY (`tecnico_identificacion`) REFERENCES `cmms_tecnicos` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -405,7 +412,7 @@ ALTER TABLE `cmms_mantenimientos`
 -- Filtros para la tabla `cmms_ordencorretiva`
 --
 ALTER TABLE `cmms_ordencorretiva`
-  ADD CONSTRAINT `Orden_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Orden_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Orden_ibfk_2` FOREIGN KEY (`identificación_tecnico`) REFERENCES `cmms_tecnicos` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Orden_ibfk_3` FOREIGN KEY (`R1`) REFERENCES `cmms_repuestos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Orden_ibfk_4` FOREIGN KEY (`R2`) REFERENCES `cmms_repuestos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -416,14 +423,14 @@ ALTER TABLE `cmms_ordencorretiva`
 -- Filtros para la tabla `cmms_repuestos`
 --
 ALTER TABLE `cmms_repuestos`
-  ADD CONSTRAINT `Repuestos_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Repuestos_ibfk_1` FOREIGN KEY (`codigo_equipo`) REFERENCES `cmms_equipos` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Repuestos_ibfk_2` FOREIGN KEY (`proveedor_identificacion`) REFERENCES `cmms_proveedores` (`Identificacion`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cmms_usuarios`
 --
 ALTER TABLE `cmms_usuarios`
-  ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`ubicacion_codigo`) REFERENCES `cmms_ubicaciones` (`Codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`ubicacion_codigo`) REFERENCES `cmms_ubicaciones` (`codigo`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
