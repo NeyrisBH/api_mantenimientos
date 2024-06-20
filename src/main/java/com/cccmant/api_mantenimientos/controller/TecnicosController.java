@@ -34,6 +34,7 @@ public class TecnicosController {
     public ResponseEntity<?> crearTecnico(@RequestBody Tecnico tecnico) {
     Optional<Tecnico> tecnicoExistente = service.consultarTecnicoPorIdentificacion(tecnico.getIdentificacion());
         if (tecnicoExistente.isPresent()) {
+            System.out.println(tecnico.getIdentificacion());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya existe un técnico con la misma identificación.");
         } else {
             String encrypPassword = passwordEncoder.encode(tecnico.getContraseña());

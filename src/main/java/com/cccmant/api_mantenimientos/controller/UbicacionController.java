@@ -29,6 +29,7 @@ public class UbicacionController {
     public ResponseEntity<?> crearUbicacion(@RequestBody Ubicacion ubicacion) {
         Optional<Ubicacion> ubicaciionCrear = servicio.consultarPorId(ubicacion.getCodigo());
         if (ubicaciionCrear.isPresent()) {
+            System.out.println(ubicacion.getCodigo());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(ubicacion));

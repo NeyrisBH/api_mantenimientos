@@ -22,6 +22,7 @@ import com.cccmant.api_mantenimientos.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -61,8 +62,9 @@ public class AuthController {
             String headers = request.getHeader(HEADER);
             if (headers == null) {
                 SecurityContextHolder.clearContext();
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No se encontró ningún token JWT en los encabezados de solicitud");
             } else if (headers.startsWith(PREFIX)) {
-                String token = headers.replace(PREFIX, "");
+                String token = headers.replace(PREFIX, "").trim();
                 Claims contenido = new JwtUtil().obtenerClaims(token);
                 String email = (String) contenido.get("email");
                 System.out.println(email);
@@ -71,9 +73,16 @@ public class AuthController {
                 System.out.println(token2);
             } else {
                 SecurityContextHolder.clearContext();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El token JWT no comienza con el prefijo correcto");
             }
-        } catch (ExpiredJwtException | UnsupportedJwtException e) {
-
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT token ha expirado");
+        } catch (UnsupportedJwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El token JWT no es compatible");
+        } catch (MalformedJwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El token JWT tiene un formato incorrecto");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Se produjo un error al procesar el token JWT");
         }
         return ResponseEntity.ok(new JSONObject().put("token", token2).toString());
     }

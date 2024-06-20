@@ -1,0 +1,15 @@
+Flujo de Manejo de Tokens
+
+    Inicio de Sesión (Login)
+        El usuario envía sus credenciales (nombre de usuario y contraseña) al servidor.
+        El servidor valida las credenciales y, si son correctas, genera un token de acceso (access token) y un token de actualización (refresh token).
+        El token de acceso se almacena en localStorage o sessionStorage.
+        El token de actualización se almacena en una cookie HttpOnly.
+
+    Uso del Token de Acceso
+        En cada solicitud a las API REST, el token de acceso se envía en los encabezados de autorización.
+        Cuando el token de acceso expira, el cliente usa el token de actualización para obtener un nuevo token de acceso.
+
+    Refrescar el Token de Acceso
+        Cuando el token de acceso expira, se hace una solicitud al servidor para obtener un nuevo token de acceso usando el token de actualización.
+        Si la solicitud de refresco del token de acceso es exitosa, el nuevo token de acceso se almacena de nuevo en localStorage o sessionStorage.

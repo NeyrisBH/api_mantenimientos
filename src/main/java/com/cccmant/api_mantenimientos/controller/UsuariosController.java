@@ -53,7 +53,7 @@ public class UsuariosController {
 
     @PostMapping
     public ResponseEntity<?> crearUsuario(@RequestBody Usuarios usuario) {
-        Optional<Usuarios> usuarioCrear = servicio.consultarUsuarioPorId(usuario.getId());
+        Optional<Usuarios> usuarioCrear = servicio.consultarUsuarioPorId(usuario.getCodigo());
         if (usuarioCrear.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -64,7 +64,7 @@ public class UsuariosController {
     public ResponseEntity<?> actualizarUsuario(@RequestBody Usuarios usuario, @PathVariable Long id) {
         Optional<Usuarios> usuarios = servicio.consultarUsuarioPorId(id);
         if (usuarios.isPresent()) {
-            if (usuario.getId() == id) {
+            if (usuario.getCodigo() == id) {
                 return ResponseEntity.status(HttpStatus.OK).body(servicio.actualizar(usuario));
             } else {
                 JSONObject mensajeErrorPorId = new JSONObject();

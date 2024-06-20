@@ -42,7 +42,7 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public Usuarios crear(Usuarios usuario) {
-        Optional<Usuarios> consultarParaCrear = repository.findById(usuario.getId());
+        Optional<Usuarios> consultarParaCrear = repository.findById(usuario.getCodigo());
         if (consultarParaCrear.isPresent()) {
             return null;
         }
@@ -55,7 +55,7 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public Usuarios actualizar(Usuarios usuario) {
-        Optional<Usuarios> usuarioActualizar = repository.findById(usuario.getId());
+        Optional<Usuarios> usuarioActualizar = repository.findById(usuario.getCodigo());
         if (usuarioActualizar.isPresent()) {
             return repository.save(usuario);
         }
